@@ -1,6 +1,6 @@
 #include <iostream>
 #include <fstream>
-#include "arithmeticEncoder.h"
+#include "arithmeticCoder.h"
 
 using namespace std;
 
@@ -22,6 +22,8 @@ int main() {
 
     contents.pop_back();
 
+    //contents = "1111111111111111";
+
     //编码
     arithmeticCoder ac(contents);
     ac.encode();
@@ -36,8 +38,8 @@ int main() {
     //输出解码结果
     cout << ac2.getString() << endl;
     cout << contents.length() << " Byte  (原大小)" << endl;
-    cout << (ac.getData()[0]) * sizeof(uint32_t) << " Byte  (压缩后带索引大小)" << endl;
-    cout << (ac.getData()[0] - 258) * sizeof(uint32_t) << " Byte  (压缩后不带索引大小)" << endl;
+    cout << (data[0]) * sizeof(uint32_t) << " Byte  (压缩后带索引大小)" << endl;
+    cout << (data[0] - (data[0] > 258 ? 258 : 0)) * sizeof(uint32_t) << " Byte  (压缩后不带索引大小)" << endl;
 
     return 0;
 }
