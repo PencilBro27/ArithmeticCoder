@@ -20,6 +20,8 @@ int main() {
         cout << "Can not open " << filename << " !!!" << endl;
     }
 
+    contents.pop_back();
+
     //编码
     arithmeticCoder ac(contents);
     ac.encode();
@@ -36,5 +38,6 @@ int main() {
     cout << contents.length() << " Byte  (原大小)" << endl;
     cout << (ac.getData()[0]) * sizeof(uint32_t) << " Byte  (压缩后带索引大小)" << endl;
     cout << (ac.getData()[0] - 258) * sizeof(uint32_t) << " Byte  (压缩后不带索引大小)" << endl;
+
     return 0;
 }
