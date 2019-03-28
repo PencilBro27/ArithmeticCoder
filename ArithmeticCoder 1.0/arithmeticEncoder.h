@@ -616,6 +616,7 @@ public:
                     for (uint32_t j = 0; j < code[1]; j++) {
                         hhh[j] = (char) i;
                     }
+                    str = hhh;
                     return;
                 }
             }
