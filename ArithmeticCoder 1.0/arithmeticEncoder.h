@@ -493,12 +493,22 @@ public:
             counter[str[i]]++;
         }
         {
-            uint32_t temp = 0;
+            uint32_t temp = 0, j = 0;
             for (uint32_t i = 0; i < 256; i++) {
-                if (counter[i] > 0)
+                if (counter[i] > 0) {
                     temp++;
+                    j = i;
+                }
             }
-            assert(temp > 1);
+            if (1 == temp) {
+                code = new uint32_t[258];
+                code[0] = 258;
+                code[1] = str.length();
+                memset(code + 2, 0, 256 * sizeof(uint32_t));
+                code[2 + j] = 1;
+                Encoded = true;
+                return;
+            };
         }
         for (uint32_t i = 0; i < 256; i++) {
             uint64_t posibility = 0x0000000100000000;
@@ -599,6 +609,18 @@ public:
         if (Decoded)
             return;
         char *hhh = new char[code[1] + 1];
+        hhh[code[1]] = 0;
+        if (258 == this->code[0]) {
+            for (uint32_t i = 0; i < 256; i++) {
+                if (0 != code[2 + i]) {
+                    for (uint32_t j = 0; j < code[1]; j++) {
+                        hhh[j] = (char) i;
+                    }
+                    return;
+                }
+            }
+            cout << "invalid data!" << endl;
+        }
         for (uint32_t ii = 0; ii < code[1]; ii++) {
             uint32_t i;
             for (i = 0; i < 255; i++) {
@@ -611,6 +633,7 @@ public:
         }
         str = hhh;
         delete[] hhh;
+        hhh = nullptr;
     }
 
     uint32_t *getData() {
