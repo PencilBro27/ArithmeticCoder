@@ -610,6 +610,8 @@ public:
     }
 
     uint32_t *getData() {
+        uint32_t *ret = new uint32_t[code[0]];
+        memcpy(ret, code, code[0] * sizeof(uint32_t));
         return code;
     }
 
